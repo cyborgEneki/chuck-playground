@@ -10,10 +10,15 @@ const HomePage = () => {
 
   return (
     <div>
-      {
-        categories.map((category, index) => (<CategoryDisplay category={category} key={index} />))
-      }
-
+      <ul className="list-group">
+        {
+          categories.map((category, index) => (
+            <li className="list-group-item">
+              <CategoryDisplay category={category} key={index} />
+            </li>
+          ))
+        }
+      </ul>
     </div>
   )
 }
