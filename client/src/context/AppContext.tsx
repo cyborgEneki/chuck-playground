@@ -34,6 +34,15 @@ const AppContextProvider = ({ children }: Props) => {
       .catch(err => dispatch({ type: actionTypes.SET_ERROR, payload: err.message }));
   }, []);
 
+  useEffect(() => {
+    dispatch({ type: actionTypes.SET_LOADING, payload: true });
+
+    fetch("/")
+      .then(res => res.json())
+      .then(data => dispatch({ type: actionTypes.GET_RANDOM_JOKE, payload: data.joke }))
+      .catch(err => dispatch({ type: actionTypes.SET_ERROR, payload: err.message }));
+  }, []);
+
   return <AppContext.Provider value={{ state, dispatch }}> {children} </AppContext.Provider>;
 };
 
