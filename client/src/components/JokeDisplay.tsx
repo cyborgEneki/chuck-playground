@@ -1,12 +1,11 @@
-import type { Joke } from '../types';
+import { Link } from "react-router-dom";
 
-type Props = {
-  joke: Joke
-}
-
-const JokeDisplay = ({ joke }: Props) => {
+const JokeDisplay = () => {
   return (
-    <div>Joke</div>
+    <div>
+      <Link to="/">Go Home</Link>
+      <h1>Joke</h1>
+    </div>
   )
 }
 
