@@ -1,40 +1,55 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { ChuckAPI } from './chuck-api';
 
 const typeDefs = `#graphql
-  type Book {
-    title: String
-    author: String
+  type Category {
+    name: String
+  }
+
+  type Joke {
+    body: String
+    category: Category
   }
 
   type Query {
-    books: [Book]
+    categories: [Category],
+    randomJoke: Joke
   }
 `;
 
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
 const resolvers = {
   Query: {
-    books: () => books,
+    randomJoke: async (_, { category }, { dataSources }) => {
+      return dataSources.chuckAPI.getRandomJoke(category);
+    },
+    categories: async (_, __, { dataSources }) => {
+      return dataSources.chuckAPI.getAllCategories();
+    },
   },
 };
 
-const server = new ApolloServer({
+interface ContextValue {
+  dataSources: {
+    chuckAPI: ChuckAPI;
+  };
+}
+
+
+const server = new ApolloServer<ContextValue>({
   typeDefs,
-  resolvers,
+  resolvers
 });
 
 const { url } = await startStandaloneServer(server, {
+  context: async () => {
+    const { cache } = server;
+    return {
+      dataSources: {
+        chuckAPI: new ChuckAPI({ cache }),
+      },
+    };
+  },
   listen: { port: Number(process.env.API_PORT) || 4000 },
 });
 

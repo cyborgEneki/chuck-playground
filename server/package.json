@@ -20,9 +20,13 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
+    "@apollo/datasource-rest": "^5.0.2",
     "@apollo/server": "^4.5.0",
+    "@pothos/core": "^3.29.0",
+    "@pothos/plugin-prisma": "^3.47.0",
     "@prisma/client": "^4.12.0",
-    "graphql": "^16.6.0"
+    "graphql": "^16.6.0",
+    "graphql-scalars": "^1.21.3"
   },
   "prisma": "ts-node-dev prisma/seed.ts",
   "type": "module"
