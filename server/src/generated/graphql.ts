@@ -20,7 +20,6 @@ export type Category = {
 
 export type Joke = {
   __typename?: 'Joke';
-  categories?: Maybe<Array<Maybe<Category>>>;
   value?: Maybe<Scalars['String']>;
 };
 
@@ -127,7 +126,6 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type JokeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Joke'] = ResolversParentTypes['Joke']> = {
-  categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

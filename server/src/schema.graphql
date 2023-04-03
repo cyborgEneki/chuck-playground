@@ -9,5 +9,4 @@ type Category {
 
 type Joke {
   value: String
-  categories: [Category]
 }
