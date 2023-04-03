@@ -1,4 +1,5 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
+import { Category, Joke } from './generated/graphql';
 
 export class ChuckAPI extends RESTDataSource {
   override baseURL = 'https://api.chucknorris.io/jokes/';

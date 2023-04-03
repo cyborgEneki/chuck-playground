@@ -1,0 +1,13 @@
+type Query {
+  categories: [Category]
+  randomJoke: Joke
+}
+
+type Category {
+  name: String
+}
+
+type Joke {
+  body: String
+  category: Category
+}

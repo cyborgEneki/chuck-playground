@@ -1,40 +1,15 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { ChuckAPI } from './chuck-api';
-
-const typeDefs = `#graphql
-  type Category {
-    name: String
-  }
-
-  type Joke {
-    body: String
-    category: Category
-  }
-
-  type Query {
-    categories: [Category],
-    randomJoke: Joke
-  }
-`;
-
-const resolvers = {
-  Query: {
-    randomJoke: async (_, { category }, { dataSources }) => {
-      return dataSources.chuckAPI.getRandomJoke(category);
-    },
-    categories: async (_, __, { dataSources }) => {
-      return dataSources.chuckAPI.getAllCategories();
-    },
-  },
-};
+import { readFileSync } from 'fs';
+import resolvers from "../src/resolvers"
+const typeDefs = readFileSync('../server/src/schema.graphql', { encoding: 'utf-8'});
 
 interface ContextValue {
   dataSources: {
     chuckAPI: ChuckAPI;
   };
 }
-
 
 const server = new ApolloServer<ContextValue>({
   typeDefs,
