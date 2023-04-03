@@ -20,14 +20,19 @@ export type Category = {
 
 export type Joke = {
   __typename?: 'Joke';
-  body?: Maybe<Scalars['String']>;
-  category?: Maybe<Category>;
+  categories?: Maybe<Array<Maybe<Category>>>;
+  value?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
   __typename?: 'Query';
   categories?: Maybe<Array<Maybe<Category>>>;
   randomJoke?: Maybe<Joke>;
+};
+
+
+export type QueryRandomJokeArgs = {
+  category?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -122,14 +127,14 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type JokeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Joke'] = ResolversParentTypes['Joke']> = {
-  body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
+  categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType>;
-  randomJoke?: Resolver<Maybe<ResolversTypes['Joke']>, ParentType, ContextType>;
+  randomJoke?: Resolver<Maybe<ResolversTypes['Joke']>, ParentType, ContextType, Partial<QueryRandomJokeArgs>>;
 };
 
 export type Resolvers<ContextType = any> = {

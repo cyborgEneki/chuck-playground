@@ -1,19 +1,15 @@
 import { RESTDataSource } from '@apollo/datasource-rest';
-import { Category, Joke } from './generated/graphql';
+import { Category } from './generated/graphql';
 
 export class ChuckAPI extends RESTDataSource {
   override baseURL = 'https://api.chucknorris.io/jokes/';
 
-  async getRandomJoke(category: string): Promise<Joke[]> {
-    return this.get<Joke[]>(`random/${encodeURIComponent(category)}`);
+  async getRandomJoke(category: string): Promise<any> {
+    return await this.get(`random/?category=${category}`);
   }
 
-  async getAllCategories(limit = '10'): Promise<Category[]> {
-    const data = await this.get('categories', {
-      params: {
-        per_page: limit
-      },
-    });
-    return data.results;
+  async getAllCategories(): Promise<Category[]> {
+    const data = await this.get('categories');
+    return data.map((name: string) => ({ name }));
   }
 }
